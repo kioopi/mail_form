@@ -2,6 +2,9 @@ require 'minitest/autorun'
 
 RAILS_ENV = ENV["RAILS_ENV"] = "test"
 
+$:.unshift File.dirname(__FILE__) + '/../lib'
+require 'mail_form'
+
 require 'active_support'
 require 'active_support/test_case'
 require 'action_controller'
@@ -10,9 +13,6 @@ require 'action_mailer'
 
 ActionMailer::Base.delivery_method = :test
 I18n.enforce_available_locales = false
-
-$:.unshift File.dirname(__FILE__) + '/../lib'
-require 'mail_form'
 
 class ContactForm < MailForm::Base
   attribute :name,     :validate => true

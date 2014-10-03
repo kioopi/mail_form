@@ -132,7 +132,7 @@ module MailForm
       self.class.mail_captcha.each do |field|
         next if send(field).blank?
 
-        if defined?(Rails) && Rails.env.development?
+        if raise_on_spam?
           raise ScriptError, "The captcha field #{field} was supposed to be blank"
         else
           return true
@@ -144,6 +144,10 @@ module MailForm
 
     def not_spam?
       !spam?
+    end
+
+    def raise_on_spam?
+      MailForm.raise_on_spam?
     end
 
     # Deliver the resource without running any validation.
